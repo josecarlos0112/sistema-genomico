@@ -35,9 +35,6 @@ public class Main extends JFrame {
         System.out.println("Botón 4 presionado");
     }
 
-    public void funcionBoton5() {
-        System.out.println("Botón 5 presionado");
-    }
     public Main() {
         // Configuración del JFrame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,7 +44,7 @@ public class Main extends JFrame {
         String iconPath = "src/resources/uax-corto.png";
         ImageIcon icon = new ImageIcon(iconPath);
         setIconImage(icon.getImage());
-        setTitle("Sistema de Gestión de Publicaciones");
+        setTitle("Sistema Interactivo de Análisis Genómico y Organización de Datos");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -72,7 +69,7 @@ public class Main extends JFrame {
         panelIzquierdo.add(Box.createRigidArea(new Dimension(0, 10)));//Espacio entre la imagen y el texto debajo
 
         // Frase
-        JLabel labelFrase = new JLabel("Bienvenido al Sistema de Gestión de Publicaciones");
+        JLabel labelFrase = new JLabel("Análisis Genómico y Organización de Datos");
         labelFrase.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelFrase.setFont(new Font("Arial", Font.BOLD, 20));
         panelIzquierdo.add(labelFrase);
@@ -87,11 +84,10 @@ public class Main extends JFrame {
 
         // Textos para los botones
         String[] textosBotones = {
-                "Editor de Texto Interactivo",
-                "Comparador y Contador de Contenido ",
-                "Gestión de Contactos",
-                "Interfaz Gráfica Avanzada",
-                "Diseño Gráfico"
+                "Análisis Genómico",
+                "Herramientas de Análisis Numérico",
+                "Gestión de Información Científica",
+                "Optimización de Procesos",
         };
 
         // Crear y agregar los botones al panel derecho
@@ -114,9 +110,6 @@ public class Main extends JFrame {
                         break;
                     case 3:
                         funcionBoton4();
-                        break;
-                    case 4:
-                        funcionBoton5();
                         break;
                 }
             });
