@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GestionGUI {
+public class GestionGUI extends JFrame{
     private JFrame frame;
     private JTextArea resultArea;
     private OrganizacionDocs organizacionDocumentos;
