@@ -16,8 +16,6 @@ public class AnalisisGUI extends JFrame{
 
     public AnalisisGUI() {
         frame = new JFrame("Análisis Genómico");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(500, 300);
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 600);

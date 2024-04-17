@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class AnalisisNumGUI {
     private JFrame frame;
@@ -15,23 +15,54 @@ public class AnalisisNumGUI {
 
     public AnalisisNumGUI() {
         frame = new JFrame("Análisis Numérico");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(1000, 600);
+        String iconPath = "src/resources/uax-corto.png";
+        ImageIcon icon = new ImageIcon(iconPath);
+        frame.setIconImage(icon.getImage());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+        frame.setLocation(width/2-500, height/2-300);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         frame.add(panel);
 
-        inputField = new JTextField(10);
-        panel.add(inputField);
+        inputField = new JTextField("Ingrese un número aquí...");
+inputField.setForeground(Color.GRAY);
+inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputField.getPreferredSize().height));
+inputField.addFocusListener(new FocusListener() {
+    @Override
+    public void focusGained(FocusEvent e) {
+        if (inputField.getText().equals("Ingrese un número aquí...")) {
+            inputField.setText("");
+            inputField.setForeground(Color.BLACK);
+        }
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (inputField.getText().isEmpty()) {
+            inputField.setForeground(Color.GRAY);
+            inputField.setText("Ingrese un número aquí...");
+        }
+    }
+});
+panel.add(inputField);
 
         JButton sumButton = new JButton("Calcular Sumatoria");
         sumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = Integer.parseInt(inputField.getText());
-                int sum = SumatoriaNumeros.sumatoria(n);
-                resultArea.append("Sumatoria de " + n + " es " + sum + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
+                    int n = Integer.parseInt(inputField.getText());
+                    int sum = SumatoriaNumeros.sumatoria(n);
+                    resultArea.append("Sumatoria de " + n + " es " + sum + "\n");
+                } else {
+                    resultArea.append("Por favor, ingrese un número.\n");
+                }
             }
         });
         panel.add(sumButton);
@@ -40,9 +71,13 @@ public class AnalisisNumGUI {
         listButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = Integer.parseInt(inputField.getText());
-                List<Integer> list = ListadoNumeros.listarNumeros(1, n);
-                resultArea.append("Números del 1 al " + n + ": " + list + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
+                    int n = Integer.parseInt(inputField.getText());
+                    List<Integer> list = ListadoNumeros.listarNumeros(1, n);
+                    resultArea.append("Números del 1 al " + n + ": " + list + "\n");
+                } else {
+                    resultArea.append("Por favor, ingrese un número.\n");
+                }
             }
         });
         panel.add(listButton);
@@ -51,10 +86,14 @@ public class AnalisisNumGUI {
         maxButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = Integer.parseInt(inputField.getText());
-                List<Integer> list = ListadoNumeros.listarNumeros(1, n);
-                int max = MaximoNumeros.maximo(list);
-                resultArea.append("Máximo de los números del 1 al " + n + " es " + max + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
+                    int n = Integer.parseInt(inputField.getText());
+                    List<Integer> list = ListadoNumeros.listarNumeros(1, n);
+                    int max = MaximoNumeros.maximo(list);
+                    resultArea.append("Máximo de los números del 1 al " + n + " es " + max + "\n");
+                } else {
+                    resultArea.append("Por favor, ingrese un número.\n");
+                }
             }
         });
         panel.add(maxButton);
@@ -63,9 +102,13 @@ public class AnalisisNumGUI {
         powButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = Integer.parseInt(inputField.getText());
-                int pow = CalculoPotencias.potencia(n, 2);
-                resultArea.append(n + " al cuadrado es " + pow + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
+                    int n = Integer.parseInt(inputField.getText());
+                    int pow = CalculoPotencias.potencia(n, 2);
+                    resultArea.append(n + " al cuadrado es " + pow + "\n");
+                } else {
+                    resultArea.append("Por favor, ingrese un número.\n");
+                }
             }
         });
         panel.add(powButton);
