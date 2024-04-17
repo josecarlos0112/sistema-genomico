@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class OptimizacionGUI {
     private JFrame frame;
@@ -23,8 +24,24 @@ public class OptimizacionGUI {
 
         mejoraAlgoritmo = new MejoraAlgoritmo();
 
-        JButton sortButton = new JButton("Ordenar Array");
-        sortButton.addActionListener(new ActionListener() {
+        JButton userInputButton = new JButton("Ingresar Array");
+        userInputButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userInput = JOptionPane.showInputDialog(frame, "Ingrese los números del array separados por comas:");
+                Integer[] array = Stream.of(userInput.split(","))
+                        .map(String::trim)
+                        .map(Integer::parseInt)
+                        .toArray(Integer[]::new);
+                resultArea.append("Array antes de ordenar: " + Arrays.toString(array) + "\n");
+                mejoraAlgoritmo.sort(array);
+                resultArea.append("Array después de ordenar: " + Arrays.toString(array) + "\n");
+            }
+        });
+        panel.add(userInputButton);
+
+        JButton randomArrayButton = new JButton("Generar Array Aleatorio");
+        randomArrayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Integer[] array = generateRandomArray(10, 0, 100);
@@ -33,7 +50,7 @@ public class OptimizacionGUI {
                 resultArea.append("Array después de ordenar: " + Arrays.toString(array) + "\n");
             }
         });
-        panel.add(sortButton);
+        panel.add(randomArrayButton);
 
         resultArea = new JTextArea(10, 30);
         resultArea.setEditable(false);
