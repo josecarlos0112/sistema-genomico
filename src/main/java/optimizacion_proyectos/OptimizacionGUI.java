@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class OptimizacionGUI {
+public class OptimizacionGUI extends JFrame{
     private JFrame frame;
     private JTextArea resultArea;
     private MejoraAlgoritmo mejoraAlgoritmo;
