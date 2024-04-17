@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Main extends JFrame {
 
-    public static void ventanaPlantilla(JFrame frame, String titulo) {
+    public static JFrame ventanaPlantilla(JFrame frame, String titulo) {
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 600);
@@ -12,6 +12,7 @@ public class Main extends JFrame {
         ImageIcon icon = new ImageIcon(iconPath);
         frame.setIconImage(icon.getImage());
         centrarVentana(frame);
+        return frame;
     }
     public static void centrarVentana(JFrame frame) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

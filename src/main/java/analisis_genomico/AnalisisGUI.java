@@ -1,25 +1,59 @@
 package analisis_genomico;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-public class AnalisisGUI {
+public class AnalisisGUI extends JFrame{
     private JFrame frame;
     private JTextField inputField;
     private JTextArea resultArea;
 
     public AnalisisGUI() {
         frame = new JFrame("Análisis Genómico");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(500, 300);
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
+        frame.setSize(1000, 600);
+        String iconPath = "src/resources/uax-corto.png";
+        ImageIcon icon = new ImageIcon(iconPath);
+        frame.setIconImage(icon.getImage());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+        frame.setLocation(width/2-500, height/2-300);
+
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         inputField = new JTextField();
         inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputField.getPreferredSize().height));
+        inputField.setText("Ingrese la secuencia de ADN aquí...");
+        inputField.setForeground(Color.GRAY);
+        inputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (inputField.getText().equals("Ingrese la secuencia de ADN aquí...")) {
+                    inputField.setText("");
+                    inputField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputField.getText().isEmpty()) {
+                    inputField.setForeground(Color.GRAY);
+                    inputField.setText("Ingrese la secuencia de ADN aquí...");
+                }
+            }
+        });
         panel.add(inputField);
 
         JButton countButton = new JButton("Contar genes");
@@ -38,7 +72,6 @@ public class AnalisisGUI {
         combButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 String inputText = inputField.getText();
                 if (!inputText.isEmpty()) {
                     CombinacionesGeneticas combinacionesGeneticas = new CombinacionesGeneticas();
@@ -58,6 +91,7 @@ public class AnalisisGUI {
 
         frame.add(panel);
     }
+
 
     public void show() {
         frame.setVisible(true);
