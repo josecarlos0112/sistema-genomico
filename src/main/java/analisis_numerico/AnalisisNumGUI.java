@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnalisisNumGUI {
     private JFrame frame;
@@ -30,27 +32,27 @@ public class AnalisisNumGUI {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         frame.add(panel);
 
-        inputField = new JTextField("Ingrese un número aquí...");
-inputField.setForeground(Color.GRAY);
-inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputField.getPreferredSize().height));
-inputField.addFocusListener(new FocusListener() {
-    @Override
-    public void focusGained(FocusEvent e) {
-        if (inputField.getText().equals("Ingrese un número aquí...")) {
-            inputField.setText("");
-            inputField.setForeground(Color.BLACK);
-        }
-    }
+        inputField = new JTextField("Ingrese números separados por comas...");
+        inputField.setForeground(Color.GRAY);
+        inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputField.getPreferredSize().height));
+        inputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (inputField.getText().equals("Ingrese números separados por comas...")) {
+                    inputField.setText("");
+                    inputField.setForeground(Color.BLACK);
+                }
+            }
 
-    @Override
-    public void focusLost(FocusEvent e) {
-        if (inputField.getText().isEmpty()) {
-            inputField.setForeground(Color.GRAY);
-            inputField.setText("Ingrese un número aquí...");
-        }
-    }
-});
-panel.add(inputField);
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputField.getText().isEmpty()) {
+                    inputField.setForeground(Color.GRAY);
+                    inputField.setText("Ingrese números separados por comas...");
+                }
+            }
+        });
+        panel.add(inputField);
 
         JButton sumButton = new JButton("Calcular Sumatoria");
         sumButton.addActionListener(new ActionListener() {
@@ -86,13 +88,15 @@ panel.add(inputField);
         maxButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
-                    int n = Integer.parseInt(inputField.getText());
-                    List<Integer> list = ListadoNumeros.listarNumeros(1, n);
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese números separados por comas...")) {
+                    List<Integer> list = Arrays.stream(inputField.getText().split(","))
+                            .map(String::trim)
+                            .map(Integer::parseInt)
+                            .collect(Collectors.toList());
                     int max = MaximoNumeros.maximo(list);
-                    resultArea.append("Máximo de los números del 1 al " + n + " es " + max + "\n");
+                    resultArea.append("Máximo de los números ingresados es " + max + "\n");
                 } else {
-                    resultArea.append("Por favor, ingrese un número.\n");
+                    resultArea.append("Por favor, ingrese números.\n");
                 }
             }
         });
@@ -102,12 +106,17 @@ panel.add(inputField);
         powButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
-                    int n = Integer.parseInt(inputField.getText());
-                    int pow = CalculoPotencias.potencia(n, 2);
-                    resultArea.append(n + " al cuadrado es " + pow + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese números separados por comas...")) {
+                    List<Integer> list = Arrays.stream(inputField.getText().split(","))
+                            .map(String::trim)
+                            .map(Integer::parseInt)
+                            .collect(Collectors.toList());
+                    List<Integer> powList = list.stream()
+                            .map(n -> CalculoPotencias.potencia(n, 2))
+                            .collect(Collectors.toList());
+                    resultArea.append("Potencias de los números ingresados: " + powList + "\n");
                 } else {
-                    resultArea.append("Por favor, ingrese un número.\n");
+                    resultArea.append("Por favor, ingrese números.\n");
                 }
             }
         });
