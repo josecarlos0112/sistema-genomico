@@ -15,8 +15,16 @@ public class OptimizacionGUI extends JFrame{
 
     public OptimizacionGUI() {
         frame = new JFrame("Optimización de Algoritmos");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
+        frame.setSize(1000, 600);
+        String iconPath = "src/resources/uax-corto.png";
+        ImageIcon icon = new ImageIcon(iconPath);
+        frame.setIconImage(icon.getImage());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+        frame.setLocation(width/2-500, height/2-300);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
