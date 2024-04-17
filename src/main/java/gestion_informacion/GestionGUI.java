@@ -11,7 +11,6 @@ import java.util.Date;
 
 public class GestionGUI {
     private JFrame frame;
-    private JTextField inputField;
     private JTextArea resultArea;
     private OrganizacionDocs organizacionDocumentos;
     private BusquedaTextos busquedaTextos;
@@ -26,19 +25,16 @@ public class GestionGUI {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         frame.add(panel);
 
-        inputField = new JTextField();
-        inputField.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputField.getPreferredSize().height));
-        panel.add(inputField);
-
         JButton ordenarButton = new JButton("Ordenar Documento");
         ordenarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String archivoEntrada = JOptionPane.showInputDialog(frame, "Ingrese el nombre del archivo a ordenar:");
                 try {
-                    organizacionDocumentos.ordenarArchivo(inputField.getText(), "sorted_" + inputField.getText());
+                    organizacionDocumentos.ordenarArchivo(archivoEntrada, "sorted_" + archivoEntrada);
                     resultArea.append("Documento ordenado correctamente.\n");
                 } catch (IOException ioException) {
-                    resultArea.append("Error al ordenar el documento.\n");
+                    resultArea.append("Error al ordenar el documento. Asegúrese de que el archivo existe y puede ser leído.\n");
                 }
             }
         });
@@ -48,15 +44,16 @@ public class GestionGUI {
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String palabra = JOptionPane.showInputDialog(frame, "Ingrese la palabra a buscar:");
                 try {
-                    boolean found = busquedaTextos.busquedaBinaria(inputField.getText(), "document.txt");
+                    boolean found = busquedaTextos.busquedaBinaria(palabra, "document.txt");
                     if (found) {
                         resultArea.append("Palabra encontrada en el documento.\n");
                     } else {
                         resultArea.append("Palabra no encontrada en el documento.\n");
                     }
                 } catch (IOException ioException) {
-                    resultArea.append("Error al buscar la palabra.\n");
+                    resultArea.append("Error al buscar la palabra. Asegúrese de que el archivo existe y puede ser leído.\n");
                 }
             }
         });
@@ -66,8 +63,9 @@ public class GestionGUI {
         agregarFechaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String fechaStr = JOptionPane.showInputDialog(frame, "Ingrese la fecha en el formato dd/MM/yyyy:");
                 try {
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(inputField.getText());
+                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(fechaStr);
                     gestionFechas.agregarFecha(date);
                     resultArea.append("Fecha agregada correctamente.\n");
                 } catch (ParseException parseException) {
