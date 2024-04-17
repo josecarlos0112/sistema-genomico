@@ -70,19 +70,19 @@ public class AnalisisGUI extends JFrame{
 
         JButton combButton = new JButton("Calcular combinaciones genéticas");
         combButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String inputText = inputField.getText();
-                if (!inputText.isEmpty()) {
-                    CombinacionesGeneticas combinacionesGeneticas = new CombinacionesGeneticas();
-                    int n = Integer.parseInt(inputText);
-                    int result = combinacionesGeneticas.calcularCombinaciones(n);
-                    resultArea.append("Combinaciones genéticas: " + result + "\n");
-                } else {
-                    resultArea.append("Por favor, ingrese un número.\n");
-                }
-            }
-        });
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String inputText = inputField.getText();
+        if (!inputText.isEmpty() && inputText.matches("\\d+")) {
+            CombinacionesGeneticas combinacionesGeneticas = new CombinacionesGeneticas();
+            int n = Integer.parseInt(inputText);
+            int result = combinacionesGeneticas.calcularCombinaciones(n);
+            resultArea.append("Combinaciones genéticas: " + result + "\n");
+        } else {
+            resultArea.append("Por favor, ingrese un número.\n");
+        }
+    }
+});
         panel.add(combButton);
 
         resultArea = new JTextArea();
