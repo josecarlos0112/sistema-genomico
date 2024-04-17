@@ -38,6 +38,7 @@ public class AnalisisGUI {
         combButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String inputText = inputField.getText();
                 if (!inputText.isEmpty()) {
                     CombinacionesGeneticas combinacionesGeneticas = new CombinacionesGeneticas();
