@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import analisis_genomico.AnalisisGUI;
 
 public class Main extends JFrame {
 
@@ -21,7 +22,9 @@ public class Main extends JFrame {
         frame.setLocation(width/2-500, height/2-300);
     }
     public void funcionBoton1() {
-        System.out.println("Botón 1 presionado");
+        //System.out.println("Botón 1 presionado");
+        AnalisisGUI analisis = new AnalisisGUI();
+        analisis.setVisible(true);
     }
 
     public void funcionBoton2() {
