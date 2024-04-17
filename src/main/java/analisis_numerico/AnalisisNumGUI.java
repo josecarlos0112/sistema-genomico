@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AnalisisNumGUI {
+public class AnalisisNumGUI  extends JFrame{
     private JFrame frame;
     private JTextField inputField;
     private JTextArea resultArea;

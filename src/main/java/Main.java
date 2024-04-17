@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import analisis_genomico.AnalisisGUI;
+import analisis_numerico.AnalisisNumGUI;
 
 public class Main extends JFrame {
 
@@ -29,6 +30,8 @@ public class Main extends JFrame {
 
     public void funcionBoton2() {
         System.out.println("Botón 2 presionado");
+        AnalisisNumGUI analisisNum = new AnalisisNumGUI();
+        analisisNum.setVisible(true);
     }
 
     public void funcionBoton3() {
