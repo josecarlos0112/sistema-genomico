@@ -3,6 +3,7 @@ import java.awt.*;
 import analisis_genomico.AnalisisGUI;
 import analisis_numerico.AnalisisNumGUI;
 import gestion_informacion.GestionGUI;
+import optimizacion_proyectos.OptimizacionGUI;
 
 public class Main extends JFrame {
 
@@ -42,7 +43,9 @@ public class Main extends JFrame {
     }
 
     public void funcionBoton4() {
-        System.out.println("Botón 4 presionado");
+        //System.out.println("Botón 4 presionado");
+        OptimizacionGUI optimizacion = new OptimizacionGUI();
+        optimizacion.setVisible(true);
     }
 
     public Main() {
