@@ -58,12 +58,15 @@ public class AnalisisNumGUI {
         sumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
-                    int n = Integer.parseInt(inputField.getText());
-                    int sum = SumatoriaNumeros.sumatoria(n);
-                    resultArea.append("Sumatoria de " + n + " es " + sum + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese números separados por comas...")) {
+                    List<Integer> list = Arrays.stream(inputField.getText().split(","))
+                            .map(String::trim)
+                            .map(Integer::parseInt)
+                            .collect(Collectors.toList());
+                    int sum = list.stream().mapToInt(n -> SumatoriaNumeros.sumatoria(n)).sum();
+                    resultArea.append("Sumatoria de cada número en la lista es " + sum + "\n");
                 } else {
-                    resultArea.append("Por favor, ingrese un número.\n");
+                    resultArea.append("Por favor, ingrese números.\n");
                 }
             }
         });
@@ -73,12 +76,21 @@ public class AnalisisNumGUI {
         listButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese un número aquí...")) {
-                    int n = Integer.parseInt(inputField.getText());
-                    List<Integer> list = ListadoNumeros.listarNumeros(1, n);
-                    resultArea.append("Números del 1 al " + n + ": " + list + "\n");
+                if (!inputField.getText().isEmpty() && !inputField.getText().equals("Ingrese números separados por comas...")) {
+                    String[] numbers = inputField.getText().split(",");
+                    if (numbers.length > 1) {
+                        List<Integer> list = Arrays.stream(numbers)
+                                .map(String::trim)
+                                .map(Integer::parseInt)
+                                .collect(Collectors.toList());
+                        resultArea.append("Lista de números ingresados: " + list + "\n");
+                    } else {
+                        int n = Integer.parseInt(numbers[0].trim());
+                        List<Integer> list = ListadoNumeros.listarNumeros(1, n);
+                        resultArea.append("Números del 1 al " + n + ": " + list + "\n");
+                    }
                 } else {
-                    resultArea.append("Por favor, ingrese un número.\n");
+                    resultArea.append("Por favor, ingrese un número o una lista de números.\n");
                 }
             }
         });
