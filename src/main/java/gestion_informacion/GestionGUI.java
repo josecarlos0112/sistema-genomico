@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,16 +26,24 @@ public class GestionGUI {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         frame.add(panel);
 
+        organizacionDocumentos = new OrganizacionDocs();
+        busquedaTextos = new BusquedaTextos();
+        gestionFechas = new Gestionfch();
+
         JButton ordenarButton = new JButton("Ordenar Documento");
         ordenarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String archivoEntrada = JOptionPane.showInputDialog(frame, "Ingrese el nombre del archivo a ordenar:");
-                try {
-                    organizacionDocumentos.ordenarArchivo(archivoEntrada, "sorted_" + archivoEntrada);
-                    resultArea.append("Documento ordenado correctamente.\n");
-                } catch (IOException ioException) {
-                    resultArea.append("Error al ordenar el documento. Asegúrese de que el archivo existe y puede ser leído.\n");
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        organizacionDocumentos.ordenarArchivo(selectedFile.getPath(), "sorted_" + selectedFile.getName());
+                        resultArea.append("Documento ordenado correctamente.\n");
+                    } catch (IOException ioException) {
+                        resultArea.append("Error al ordenar el documento. Asegúrese de que el archivo existe y puede ser leído.\n");
+                    }
                 }
             }
         });
@@ -45,15 +54,20 @@ public class GestionGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String palabra = JOptionPane.showInputDialog(frame, "Ingrese la palabra a buscar:");
-                try {
-                    boolean found = busquedaTextos.busquedaBinaria(palabra, "document.txt");
-                    if (found) {
-                        resultArea.append("Palabra encontrada en el documento.\n");
-                    } else {
-                        resultArea.append("Palabra no encontrada en el documento.\n");
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        boolean found = busquedaTextos.busquedaBinaria(palabra, selectedFile.getPath());
+                        if (found) {
+                            resultArea.append("Palabra encontrada en el documento.\n");
+                        } else {
+                            resultArea.append("Palabra no encontrada en el documento.\n");
+                        }
+                    } catch (IOException ioException) {
+                        resultArea.append("Error al buscar la palabra. Asegúrese de que el archivo existe y puede ser leído.\n");
                     }
-                } catch (IOException ioException) {
-                    resultArea.append("Error al buscar la palabra. Asegúrese de que el archivo existe y puede ser leído.\n");
                 }
             }
         });
@@ -79,7 +93,11 @@ public class GestionGUI {
         listarFechasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resultArea.append("Fechas: " + gestionFechas.listarFechas() + "\n");
+                try {
+                    resultArea.append("Fechas: " + gestionFechas.listarFechas() + "\n");
+                } catch (Exception exception) {
+                    resultArea.append("Error al listar las fechas.\n");
+                }
             }
         });
         panel.add(listarFechasButton);
